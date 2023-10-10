@@ -2,6 +2,7 @@ import time
 
 from ace.framework.layer import Layer, LayerSettings
 from ace.framework.prompts.identities import l6_identity
+import time
 
 
 class Layer6(Layer):

@@ -6,7 +6,8 @@ from threading import Thread
 
 from ace.settings import Settings
 from ace.framework.resource import Resource
-
+import openai
+from ace.framework.llm.gpt import GPT
 
 class LayerSettings(Settings):
     mode: str = 'OpenAI'
@@ -19,6 +20,7 @@ class Layer(Resource):
     async def post_connect(self):
         self.set_adjacent_layers()
         self.set_identity()
+        self.set_llm()
         await self.register_busses()
 
     async def pre_disconnect(self):
@@ -37,6 +39,9 @@ class Layer(Resource):
             message = f"Invalid layer name: {self.settings.name}"
             self.log.error(message)
             raise ValueError(message)
+    
+    def set_llm(self):
+        self.llm = GPT("")
 
     async def register_busses(self):
         self.log.debug("Registering busses...")
